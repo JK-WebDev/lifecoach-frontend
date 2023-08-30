@@ -1,0 +1,22 @@
+name: Enforce Merge from Dev to Main
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  enforce-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Merge Source and Target
+        run: |
+          source_branch=$(jq -r '.pull_request.head.ref' $GITHUB_EVENT_PATH)
+          target_branch=$(jq -r '.pull_request.base.ref' $GITHUB_EVENT_PATH)
+          
+          if [ "$target_branch" == "main" ] && [ "$source_branch" != "dev" ]; then
+            echo "Error: Only PRs from the 'dev' branch are allowed to be merged into main."
+            exit 1
+          fi
