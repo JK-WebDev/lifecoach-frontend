@@ -1,11 +1,20 @@
 import { Component } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { Header, Footer } from "./components/";
 
 export default class App extends Component {
   render() {
     return (
-      <>
-        <h1>This is the future landing page for AI Lifecoach</h1>
-      </>
+      <Router>
+        <Header />
+        <main className="p-3">
+          <Routes>
+            <Route />
+          </Routes>
+        </main>
+        <Footer />
+      </Router>
     );
   }
 }
