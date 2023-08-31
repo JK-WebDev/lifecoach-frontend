@@ -25,6 +25,7 @@ npm run dev
 
 ## Change Log
 
+- 1.0.1 - Adds routing and user auth
 - 1.0.0 - VITE boilerplate and primary dependencies
 
 ### Estimates
@@ -36,7 +37,7 @@ Estimate of time needed to complete: 3.5 hrs
 
 Start time: 12:30 pm
 
-Finish time: _____
+Finish time: 3:30 pm
 
-Actual time needed to complete: _____
+Actual time needed to complete: 3 hrs
 ```
