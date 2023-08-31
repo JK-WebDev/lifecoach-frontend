@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { Header, Footer } from "./components/";
+import { Header, Welcome, Footer } from "./components/";
 
 export default class App extends Component {
   render() {
@@ -10,7 +10,7 @@ export default class App extends Component {
         <Header />
         <main className="p-3">
           <Routes>
-            <Route />
+            <Route exact path="/" element={<Welcome />} />
           </Routes>
         </main>
         <Footer />
