@@ -19,7 +19,7 @@ Uncle Jimmy’s Life Coaching. Get life advice from your AI-powered Uncle Jimmy.
 
 ## Change Log
 
-- 1.0.0 - Initial commit
+- 1.0.0 - VITE boilerplate and primary dependencies
 
 ## Planning
 
