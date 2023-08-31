@@ -15,19 +15,23 @@ export default class Header extends Component {
       about: "About Us",
     };
 
+    const textColor = "text-white";
+
     return (
       <header className="bg-secondary bg-gradient sticky-top">
         <Navbar>
           <Container fluid>
             <Nav variant="underline">
-              <Navbar.Brand>{strings.brand}</Navbar.Brand>
+              <Navbar.Brand className={`${textColor}`}>
+                {strings.brand}
+              </Navbar.Brand>
               <Nav.Item>
-                <Nav.Link as={Link} to="/">
+                <Nav.Link as={Link} to="/" className={`${textColor}`}>
                   {strings.home}
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to="/about">
+                <Nav.Link as={Link} to="/about" className={`${textColor}`}>
                   {strings.about}
                 </Nav.Link>
               </Nav.Item>
