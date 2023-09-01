@@ -1,10 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Component } from "react";
 import { withAuth0 } from "@auth0/auth0-react";
-
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { CallToAction } from "../components";
 
 export default withAuth0(
   class Welcome extends Component {
@@ -32,19 +29,13 @@ export default withAuth0(
       );
 
       return (
-        <Container fluid>
-          <Row>
-            <Col className="d-flex justify-content-center align-content-center">
-              <p className="pt-5">
-                {welcomePre}
-                <a href="/" onClick={this.handleClick}>
-                  {strings.signInText}
-                </a>
-                {welcomePost}
-              </p>
-            </Col>
-          </Row>
-        </Container>
+        <CallToAction>
+          {welcomePre}
+          <a href="/" onClick={this.handleClick} className="text-white">
+            {strings.signInText}
+          </a>
+          {welcomePost}
+        </CallToAction>
       );
     }
   }
