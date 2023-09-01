@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Component } from "react";
 import { withAuth0 } from "@auth0/auth0-react";
-import axios from "axios";
 
 import api from "../api/axios";
 
@@ -16,6 +15,8 @@ import {
   ToastMessage,
   TaskModal,
 } from "../components";
+
+import { CallToAction } from "../components";
 
 export default withAuth0(
   class Home extends Component {
@@ -150,7 +151,7 @@ export default withAuth0(
     render() {
       const strings = {
         instructionText:
-          "Enter your question below to receive an actionable task from Uncle Jimmy",
+          "Enter your question below to receive a life-changing task from Uncle Jimmy",
       };
 
       const {
@@ -167,11 +168,9 @@ export default withAuth0(
 
       return (
         <>
+          <CallToAction>{strings.instructionText}</CallToAction>
           <Container className="text-center container-md">
             <Col>
-              <Row>
-                <h1 className="fs-5">{strings.instructionText}</h1>
-              </Row>
               <Row className="my-3">
                 <PromptInput
                   getGeneratedTask={getGeneratedTask}
