@@ -16,7 +16,8 @@ export default withAuth0(
       return (
         <Router>
           <Header />
-          <main className="p-3">
+          <main>
+
             {isLoading ? (
               <Spinner animation="border" variant="primary" />
             ) : (
