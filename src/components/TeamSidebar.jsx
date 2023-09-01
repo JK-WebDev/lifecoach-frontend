@@ -12,7 +12,8 @@ class TeamSidebar extends React.Component {
 
                     return <ListGroup.Item key={ idx } 
                                            onClick={ () => { setSelectedTm(tmKey) } }
-                                           active={ tmKey == selectedTm ?? 'true' }>
+                                           active={ tmKey == selectedTm ?? 'true' }
+                                           style={{ cursor: 'pointer' }}>
                                 { name }
                            </ListGroup.Item>
                 })}
