@@ -44,7 +44,7 @@ export default class About extends Component {
     const { teamData } = this;
 
     return (
-      <Container className="mb-5">
+      <Container className="mb-5 mt-3">
         <Row>
           <Col md={{ span: 2, offset: 1 }} className="m-2 pt-3">
             <h6 className="ms-2">The Team</h6>
