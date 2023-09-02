@@ -25,10 +25,23 @@ npm run dev
 
 ## Change Log
 
+- 1.0.2 - Adds user prompt input to request a generated task
 - 1.0.1 - Adds routing and user auth
 - 1.0.0 - VITE boilerplate and primary dependencies
 
 ### Estimates
+
+```
+Name of feature: Add prompt input with API integration
+
+Estimate of time needed to complete: 3.5 hrs
+
+Start time: 12 pm
+
+Finish time: 3:30 pm
+
+Actual time needed to complete: 3.5 hrs
+```
 
 ```
 Name of feature: Add landing pages and user login
