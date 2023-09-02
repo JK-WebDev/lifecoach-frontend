@@ -1,6 +1,6 @@
 # Lifecoach - Frontend
 
-Version 1.0.3
+Version 1.0.4
 
 ## Team Members
 
@@ -25,12 +25,37 @@ npm run dev
 
 ## Change Log
 
+- 1.0.4 - Adds ability to add tasks to task list + toast notifications
 - 1.0.3 - Adds user task list
 - 1.0.2 - Adds user prompt input to request a generated task
 - 1.0.1 - Adds routing and user auth
 - 1.0.0 - VITE boilerplate and primary dependencies
 
 ### Estimates
+
+```
+Name of feature: Add toast notifications
+
+Estimate of time needed to complete: 1 hrs
+
+Start time: 10:30 pm
+
+Finish time: 11:30 pm
+
+Actual time needed to complete: 1 hrs
+```
+
+```
+Name of feature: Save generated task to user task list
+
+Estimate of time needed to complete: 1.5 hrs
+
+Start time: 9 pm
+
+Finish time: 10 pm
+
+Actual time needed to complete: 1 hrs
+```
 
 ```
 Name of feature: Add user task list
