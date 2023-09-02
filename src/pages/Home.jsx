@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { PromptInput, ResponseCard } from "../components";
+import { PromptInput, ResponseCard, TaskList } from "../components";
 
 export default withAuth0(
   class Home extends Component {
@@ -15,6 +15,7 @@ export default withAuth0(
       super(props);
       this.state = {
         generatedResponse: null,
+        tasks: [],
       };
     }
 
@@ -43,6 +44,24 @@ export default withAuth0(
       this.setState({ generatedResponse });
     };
 
+    getTasks = async () => {
+      const route = "/task";
+      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
+      const jwt = await this.getToken();
+      const config = {
+        headers: { Authorization: `Bearer ${jwt}` },
+      };
+      axios
+        .get(url, config)
+        .then(({ data: tasks }) => this.setState({ tasks }))
+        //TODO Implement error handling
+        .catch((err) => console.error(err));
+    };
+
+    componentDidMount() {
+      this.getTasks();
+    }
+
     render() {
       const strings = {
         instructionText:
@@ -52,7 +71,7 @@ export default withAuth0(
       const {
         getGeneratedTask,
         updateGeneratedResponse,
-        state: { generatedResponse },
+        state: { generatedResponse, tasks },
       } = this;
 
       return (
@@ -75,6 +94,7 @@ export default withAuth0(
               )}
             </Col>
           </Container>
+          <TaskList tasks={tasks} />
         </>
       );
     }
