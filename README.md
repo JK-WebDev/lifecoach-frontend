@@ -25,6 +25,7 @@ npm run dev
 
 ## Change Log
 
+- 1.0.5 - Adds TaskModal to view individual task items
 - 1.0.4 - Adds ability to add tasks to task list + toast notifications
 - 1.0.3 - Adds user task list
 - 1.0.2 - Adds user prompt input to request a generated task
