@@ -1,6 +1,6 @@
 # Lifecoach - Frontend
 
-Version 1.0.0
+Version 1.0.3
 
 ## Team Members
 
@@ -25,11 +25,24 @@ npm run dev
 
 ## Change Log
 
+- 1.0.3 - Adds user task list
 - 1.0.2 - Adds user prompt input to request a generated task
 - 1.0.1 - Adds routing and user auth
 - 1.0.0 - VITE boilerplate and primary dependencies
 
 ### Estimates
+
+```
+Name of feature: Add user task list
+
+Estimate of time needed to complete: 2 hrs
+
+Start time: 5:30 pm
+
+Finish time: 7:30 pm
+
+Actual time needed to complete: 2 hrs
+```
 
 ```
 Name of feature: Add prompt input with API integration
