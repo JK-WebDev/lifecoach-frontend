@@ -7,9 +7,23 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { PromptInput, ResponseCard, TaskList } from "../components";
+import {
+  PromptInput,
+  ResponseCard,
+  TaskList,
+  ToastMessage,
+} from "../components";
 
 const REQ_TIMEOUT = 10000;
+const MESSAGE = {
+  error: {
+    getGeneratedTask:
+      "There was an unexpected error with your request. Please try again.",
+    getTasks: "There was an issue retrieving your task list.",
+    addNewTask: "There was an issue adding the task to your list.",
+  },
+  success: { addNewTask: "Your task was added successfully!" },
+};
 
 export default withAuth0(
   class Home extends Component {
@@ -18,6 +32,7 @@ export default withAuth0(
       this.state = {
         generatedResponse: null,
         tasks: [],
+        toastMsg: null,
       };
     }
 
@@ -43,8 +58,12 @@ export default withAuth0(
       axios
         .post(url, { query }, config)
         .then(({ data }) => this.updateGeneratedResponse(data))
-        //TODO Implement error handling
-        .catch((err) => console.error(err));
+        .catch(() =>
+          this.setToastMsg({
+            text: MESSAGE.error.getGeneratedTask,
+            type: "error",
+          })
+        );
     };
 
     updateGeneratedResponse = (generatedResponse = null) => {
@@ -60,8 +79,9 @@ export default withAuth0(
         .then(({ data: tasks }) =>
           this.setState({ tasks, generatedResponse: null })
         )
-        //TODO Implement error handling
-        .catch((err) => console.error(err));
+        .catch(() =>
+          this.setToastMsg({ text: MESSAGE.error.getTasks, type: "error" })
+        );
     };
 
     componentDidMount() {
@@ -80,8 +100,19 @@ export default withAuth0(
       axios
         .post(url, newTask, config)
         .then(() => this.getTasks())
-        //TODO Implement error handling
-        .catch((err) => console.error(err));
+        .then(() =>
+          this.setToastMsg({
+            text: MESSAGE.success.addNewTask,
+            type: "success",
+          })
+        )
+        .catch(() =>
+          this.setToastMsg({ text: MESSAGE.error.addNewTask, type: "error" })
+        );
+    };
+
+    setToastMsg = (toastMsg = null) => {
+      this.setState({ toastMsg });
     };
 
     render() {
@@ -91,10 +122,11 @@ export default withAuth0(
       };
 
       const {
-        state: { generatedResponse, tasks },
+        state: { generatedResponse, tasks, toastMsg },
         getGeneratedTask,
         updateGeneratedResponse,
         addNewTask,
+        setToastMsg,
       } = this;
 
       return (
@@ -119,6 +151,7 @@ export default withAuth0(
             </Col>
           </Container>
           <TaskList tasks={tasks} />
+          <ToastMessage toastMsg={toastMsg} setToastMsg={setToastMsg} />
         </>
       );
     }
