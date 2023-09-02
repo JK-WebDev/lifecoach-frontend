@@ -9,6 +9,8 @@ import Row from "react-bootstrap/Row";
 
 import { PromptInput, ResponseCard, TaskList } from "../components";
 
+const REQ_TIMEOUT = 10000;
+
 export default withAuth0(
   class Home extends Component {
     constructor(props) {
@@ -26,13 +28,18 @@ export default withAuth0(
         .catch((err) => console.error(err));
     };
 
+    getConfig = async () => {
+      const jwt = await this.getToken();
+      return {
+        headers: { Authorization: `Bearer ${jwt}` },
+        timeout: REQ_TIMEOUT,
+      };
+    };
+
     getGeneratedTask = async (query) => {
       const route = "/query";
       const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const jwt = await this.getToken();
-      const config = {
-        headers: { Authorization: `Bearer ${jwt}` },
-      };
+      const config = await this.getConfig();
       axios
         .post(url, { query }, config)
         .then(({ data }) => this.updateGeneratedResponse(data))
@@ -47,10 +54,7 @@ export default withAuth0(
     getTasks = async () => {
       const route = "/task";
       const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const jwt = await this.getToken();
-      const config = {
-        headers: { Authorization: `Bearer ${jwt}` },
-      };
+      const config = await this.getConfig();
       axios
         .get(url, config)
         .then(({ data: tasks }) => this.setState({ tasks }))
