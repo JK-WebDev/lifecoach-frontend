@@ -7,7 +7,23 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import { PromptInput, ResponseCard } from "../components";
+import {
+  PromptInput,
+  ResponseCard,
+  TaskList,
+  ToastMessage,
+} from "../components";
+
+const REQ_TIMEOUT = 10000;
+const MESSAGE = {
+  error: {
+    getGeneratedTask:
+      "There was an unexpected error with your request. Please try again.",
+    getTasks: "There was an issue retrieving your task list.",
+    addNewTask: "There was an issue adding the task to your list.",
+  },
+  success: { addNewTask: "Your task was added successfully!" },
+};
 
 export default withAuth0(
   class Home extends Component {
@@ -15,6 +31,8 @@ export default withAuth0(
       super(props);
       this.state = {
         generatedResponse: null,
+        tasks: [],
+        toastMsg: null,
       };
     }
 
@@ -25,22 +43,76 @@ export default withAuth0(
         .catch((err) => console.error(err));
     };
 
+    getConfig = async () => {
+      const jwt = await this.getToken();
+      return {
+        headers: { Authorization: `Bearer ${jwt}` },
+        timeout: REQ_TIMEOUT,
+      };
+    };
+
     getGeneratedTask = async (query) => {
       const route = "/query";
       const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const jwt = await this.getToken();
-      const config = {
-        headers: { Authorization: `Bearer ${jwt}` },
-      };
+      const config = await this.getConfig();
       axios
         .post(url, { query }, config)
         .then(({ data }) => this.updateGeneratedResponse(data))
-        //TODO Implement error handling
-        .catch((err) => console.error(err));
+        .catch(() =>
+          this.setToastMsg({
+            text: MESSAGE.error.getGeneratedTask,
+            type: "error",
+          })
+        );
     };
 
     updateGeneratedResponse = (generatedResponse = null) => {
       this.setState({ generatedResponse });
+    };
+
+    getTasks = async () => {
+      const route = "/task";
+      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
+      const config = await this.getConfig();
+      axios
+        .get(url, config)
+        .then(({ data: tasks }) =>
+          this.setState({ tasks, generatedResponse: null })
+        )
+        .catch(() =>
+          this.setToastMsg({ text: MESSAGE.error.getTasks, type: "error" })
+        );
+    };
+
+    componentDidMount() {
+      this.getTasks();
+    }
+
+    addNewTask = async () => {
+      const route = "/task";
+      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
+      const config = await this.getConfig();
+      const newTask = {
+        title: this.state.generatedResponse.task,
+        isCompleted: false,
+        notes: [],
+      };
+      axios
+        .post(url, newTask, config)
+        .then(() => this.getTasks())
+        .then(() =>
+          this.setToastMsg({
+            text: MESSAGE.success.addNewTask,
+            type: "success",
+          })
+        )
+        .catch(() =>
+          this.setToastMsg({ text: MESSAGE.error.addNewTask, type: "error" })
+        );
+    };
+
+    setToastMsg = (toastMsg = null) => {
+      this.setState({ toastMsg });
     };
 
     render() {
@@ -50,9 +122,11 @@ export default withAuth0(
       };
 
       const {
+        state: { generatedResponse, tasks, toastMsg },
         getGeneratedTask,
         updateGeneratedResponse,
-        state: { generatedResponse },
+        addNewTask,
+        setToastMsg,
       } = this;
 
       return (
@@ -70,11 +144,14 @@ export default withAuth0(
                   <ResponseCard
                     generatedResponse={generatedResponse}
                     updateGeneratedResponse={updateGeneratedResponse}
+                    addNewTask={addNewTask}
                   />
                 </Row>
               )}
             </Col>
           </Container>
+          <TaskList tasks={tasks} />
+          <ToastMessage toastMsg={toastMsg} setToastMsg={setToastMsg} />
         </>
       );
     }
