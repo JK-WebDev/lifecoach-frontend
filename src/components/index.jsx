@@ -7,3 +7,4 @@ export { default as ToastMessage } from "./ToastMessage";
 export { default as PromptInput } from "./PromptInput";
 export { default as ResponseCard } from "./ResponseCard";
 export { default as TaskList } from "./TaskList";
+export { default as TaskModal } from "./TaskModal";
