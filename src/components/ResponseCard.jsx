@@ -13,6 +13,7 @@ export default class ResponseCard extends Component {
     const {
       props: {
         generatedResponse: { message, task },
+        addNewTask,
       },
       handleClose,
     } = this;
@@ -26,6 +27,9 @@ export default class ResponseCard extends Component {
           <Card.Title>{message}</Card.Title>
           <Card.Text>{task}</Card.Text>
         </Card.Body>
+        <Card.Footer>
+          <Button onClick={addNewTask}>Add to my task list</Button>
+        </Card.Footer>
       </Card>
     );
   }

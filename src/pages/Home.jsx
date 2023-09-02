@@ -57,7 +57,9 @@ export default withAuth0(
       const config = await this.getConfig();
       axios
         .get(url, config)
-        .then(({ data: tasks }) => this.setState({ tasks }))
+        .then(({ data: tasks }) =>
+          this.setState({ tasks, generatedResponse: null })
+        )
         //TODO Implement error handling
         .catch((err) => console.error(err));
     };
@@ -66,6 +68,22 @@ export default withAuth0(
       this.getTasks();
     }
 
+    addNewTask = async () => {
+      const route = "/task";
+      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
+      const config = await this.getConfig();
+      const newTask = {
+        title: this.state.generatedResponse.task,
+        isCompleted: false,
+        notes: [],
+      };
+      axios
+        .post(url, newTask, config)
+        .then(() => this.getTasks())
+        //TODO Implement error handling
+        .catch((err) => console.error(err));
+    };
+
     render() {
       const strings = {
         instructionText:
@@ -73,9 +91,10 @@ export default withAuth0(
       };
 
       const {
+        state: { generatedResponse, tasks },
         getGeneratedTask,
         updateGeneratedResponse,
-        state: { generatedResponse, tasks },
+        addNewTask,
       } = this;
 
       return (
@@ -93,6 +112,7 @@ export default withAuth0(
                   <ResponseCard
                     generatedResponse={generatedResponse}
                     updateGeneratedResponse={updateGeneratedResponse}
+                    addNewTask={addNewTask}
                   />
                 </Row>
               )}
