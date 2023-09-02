@@ -19,12 +19,12 @@ export default class NoteList extends Component {
           <Card.Text>{note}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-end gap-2">
-          <Button variant="primary">
+          <Button variant="success" size="sm">
             {strings.editBtnIcon}
             &nbsp; &nbsp;
             {strings.editBtnText}
           </Button>
-          <Button variant="danger">
+          <Button variant="secondary" size="sm">
             {strings.deleteBtnIcon}
             &nbsp; &nbsp;
             {strings.deleteBtnText}
