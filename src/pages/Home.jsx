@@ -179,14 +179,16 @@ export default withAuth0(
                 />
               </Row>
               {
-                <Row>
-                  {generatedResponse && (
-                    <ResponseCard
-                      generatedResponse={generatedResponse}
-                      updateGeneratedResponse={updateGeneratedResponse}
-                      addNewTask={addNewTask}
-                    />
-                  )}
+                <Row className="d-flex justify-content-center">
+                  <Col xs={12} sm={10} lg={8}>
+                    {generatedResponse && (
+                      <ResponseCard
+                        generatedResponse={generatedResponse}
+                        updateGeneratedResponse={updateGeneratedResponse}
+                        addNewTask={addNewTask}
+                      />
+                    )}
+                  </Col>
                 </Row>
               }
             </Col>
