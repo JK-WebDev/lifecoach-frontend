@@ -14,6 +14,7 @@ import {
   ResponseCard,
   TaskList,
   ToastMessage,
+  TaskModal,
 } from "../components";
 
 export default withAuth0(
@@ -23,6 +24,7 @@ export default withAuth0(
       this.state = {
         generatedResponse: null,
         tasks: [],
+        selectedTask: null,
         toastMsg: null,
       };
     }
@@ -128,6 +130,10 @@ export default withAuth0(
         );
     };
 
+    setSelectedTask = (selectedTask = null) => {
+      this.setState({ selectedTask });
+    };
+
     setToastMsg = (toastMsg = null) => {
       this.setState({ toastMsg });
     };
@@ -143,6 +149,7 @@ export default withAuth0(
         getGeneratedTask,
         updateGeneratedResponse,
         addNewTask,
+        setSelectedTask,
         setToastMsg,
       } = this;
 
@@ -167,7 +174,11 @@ export default withAuth0(
               )}
             </Col>
           </Container>
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} setSelectedTask={setSelectedTask} />
+          <TaskModal
+            selectedTask={this.state.selectedTask}
+            handleClose={setSelectedTask}
+          />
           <ToastMessage toastMsg={toastMsg} setToastMsg={setToastMsg} />
         </>
       );

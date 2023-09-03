@@ -4,14 +4,12 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 import TaskListItem from "./TaskListItem";
-import TaskModal from "./TaskModal";
 
 export default class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       shouldShowList: false,
-      selectedTask: null,
     };
   }
 
@@ -19,16 +17,11 @@ export default class TaskList extends Component {
     this.setState({ shouldShowList: !this.state.shouldShowList });
   };
 
-  setSelectedTask = (selectedTask = null) => {
-    this.setState({ selectedTask });
-  };
-
   render() {
     const {
-      props: { tasks },
-      state: { shouldShowList, selectedTask },
+      props: { tasks, setSelectedTask },
+      state: { shouldShowList },
       toggleListVisibile,
-      setSelectedTask,
     } = this;
 
     const strings = {
@@ -66,7 +59,6 @@ export default class TaskList extends Component {
               ))}
           </Offcanvas.Body>
         </Offcanvas>
-        <TaskModal selectedTask={selectedTask} handleClose={setSelectedTask} />
       </>
     );
   }
