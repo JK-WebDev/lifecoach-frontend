@@ -21,8 +21,12 @@ const MESSAGE = {
       "There was an unexpected error with your request. Please try again.",
     getTasks: "There was an issue retrieving your task list.",
     addNewTask: "There was an issue adding the task to your list.",
+    updateTask: "There was an issue updating your task. Please try again.",
   },
-  success: { addNewTask: "Your task was added successfully!" },
+  success: {
+    addNewTask: "Your task was added successfully!",
+    updateTask: "Your task has been updated successfully!",
+  },
 };
 
 export default withAuth0(
@@ -108,6 +112,24 @@ export default withAuth0(
         )
         .catch(() =>
           this.setToastMsg({ text: MESSAGE.error.addNewTask, type: "error" })
+        );
+    };
+
+    updateTask = async (updatedTask) => {
+      const route = `/task/${updatedTask._id}`;
+      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
+      const config = await this.getConfig();
+      axios
+        .patch(url, updatedTask, config)
+        .then(() => this.getTasks())
+        .then(() =>
+          this.setToastMsg({
+            text: MESSAGE.success.updateTask,
+            type: "success",
+          })
+        )
+        .catch(() =>
+          this.setToastMsg({ text: MESSAGE.error.updateTask, type: "error" })
         );
     };
 
