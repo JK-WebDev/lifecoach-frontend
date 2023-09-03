@@ -4,42 +4,42 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 
 import NoteListItem from "./NoteListItem";
-import NoteForm from "./NoteForm";
 
 export default class NoteList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editNote: null,
-    };
-  }
   render() {
     const {
-      props: { notes },
-      state: { editNote },
+      props: { notes, setSelectedNote, handleDeleteNote },
     } = this;
+
     const strings = {
-      addNoteBtnText: "Add a new note",
-      noNotes:
-        "This task doesn't have any notes yet. \u{1F614}\nYou should probably add some and get this task movin' along.",
+      notesTitle: "My Notes:",
+      addNoteBtnText: "Add a note",
+      noNotes: `This task doesn't have any notes yet. \u{1F614}
+      You should probably add some and get this task movin' along.`,
     };
 
     return (
       <>
-        {editNote ? (
-          <NoteForm editNote={editNote} />
+        <h3 className="fs-6">{strings.notesTitle}</h3>
+        {notes?.length > 0 ? (
+          notes?.map((note) => (
+            <NoteListItem
+              key={note}
+              note={note}
+              setSelectedNote={setSelectedNote}
+              handleDeleteNote={handleDeleteNote}
+            />
+          ))
         ) : (
-          <>
-            <Button size="sm" className="mb-2 me-auto">
-              {strings.addNoteBtnText}
-            </Button>
-            {notes?.length > 0 ? (
-              notes?.map((note) => <NoteListItem key={note} note={note} />)
-            ) : (
-              <Col as="pre">{strings.noNotes}</Col>
-            )}
-          </>
+          <Col>{strings.noNotes}</Col>
         )}
+        <Button
+          size="sm"
+          className="mt-2 mb-2 me-auto"
+          onClick={() => setSelectedNote("")}
+        >
+          {strings.addNoteBtnText}
+        </Button>
       </>
     );
   }

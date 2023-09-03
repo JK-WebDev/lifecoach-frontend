@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 
 export default class NoteList extends Component {
   render() {
-    const { note } = this.props;
+    const { note, setSelectedNote, handleDeleteNote } = this.props;
     const strings = {
       editBtnIcon: "\u{270F}",
       editBtnText: "Edit",
@@ -19,12 +19,20 @@ export default class NoteList extends Component {
           <Card.Text>{note}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-end gap-2">
-          <Button variant="success" size="sm">
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => setSelectedNote(note)}
+          >
             {strings.editBtnIcon}
             &nbsp; &nbsp;
             {strings.editBtnText}
           </Button>
-          <Button variant="secondary" size="sm">
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={() => handleDeleteNote(note)}
+          >
             {strings.deleteBtnIcon}
             &nbsp; &nbsp;
             {strings.deleteBtnText}
