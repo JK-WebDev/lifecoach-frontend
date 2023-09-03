@@ -25,7 +25,7 @@ export default class TaskList extends Component {
 
   render() {
     const {
-      props: { tasks },
+      props: { tasks, updateTask, deleteTask },
       state: { shouldShowList, selectedTask },
       toggleListVisibile,
       setSelectedTask,
@@ -66,7 +66,12 @@ export default class TaskList extends Component {
               ))}
           </Offcanvas.Body>
         </Offcanvas>
-        <TaskModal selectedTask={selectedTask} handleClose={setSelectedTask} />
+        <TaskModal
+          selectedTask={selectedTask}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
+          handleClose={setSelectedTask}
+        />
       </>
     );
   }

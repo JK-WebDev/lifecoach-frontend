@@ -9,6 +9,12 @@ import Button from "react-bootstrap/Button";
 import NoteList from "./NoteList";
 
 export default class TaskModal extends Component {
+  handleDelete = () => {
+    const { _id } = this.props.selectedTask;
+    this.props.deleteTask(_id);
+    this.props.handleClose();
+  };
+
   render() {
     const strings = {
       title: "Life Improvement Task",
@@ -20,7 +26,10 @@ export default class TaskModal extends Component {
       newNoteBtnText: "Add a new note",
       deleteTaskBtnText: "Delete this task",
     };
-    const { selectedTask, handleClose } = this.props;
+    const {
+      props: { selectedTask, handleClose },
+      handleDelete,
+    } = this;
     const shouldShowModal = Boolean(selectedTask);
 
     return (
@@ -59,10 +68,7 @@ export default class TaskModal extends Component {
           </Col>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-end">
-          {/* <Button variant="primary" onClick={handleClose}>
-            {strings.newNoteBtnText}
-          </Button> */}
-          <Button variant="danger" onClick={handleClose} size="sm">
+          <Button variant="danger" onClick={handleDelete} size="sm">
             {strings.deleteTaskBtnText}
           </Button>
         </Modal.Footer>

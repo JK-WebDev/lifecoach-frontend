@@ -168,6 +168,8 @@ export default withAuth0(
         getGeneratedTask,
         updateGeneratedResponse,
         addNewTask,
+        updateTask,
+        deleteTask,
         setToastMsg,
       } = this;
 
@@ -192,7 +194,11 @@ export default withAuth0(
               )}
             </Col>
           </Container>
-          <TaskList tasks={tasks} />
+          <TaskList
+            tasks={tasks}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
+          />
           <ToastMessage toastMsg={toastMsg} setToastMsg={setToastMsg} />
         </>
       );
