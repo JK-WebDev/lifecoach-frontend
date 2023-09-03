@@ -9,6 +9,40 @@ import Button from "react-bootstrap/Button";
 import NoteList from "./NoteList";
 
 export default class TaskModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isCompleted: this.props.selectedTask?.isCompleted,
+    };
+  }
+
+  handleDeleteTask = () => {
+    const { _id } = this.props.selectedTask;
+    this.props.deleteTask(_id);
+    this.props.handleClose();
+  };
+
+  handleCompleteTask = ({ target }) => {
+    const { checked: isCompleted } = target;
+    console.log({ isCompleted });
+    const _id = this.props.selectedTask._id;
+    this.props.updateTask({ _id, isCompleted });
+    this.setState({ isCompleted });
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedTask !== prevProps.selectedTask) {
+      const { isCompleted } = this.props.selectedTask || {};
+      this.setState({
+        isCompleted,
+      });
+    }
+  }
+
+  handleClose = () => {
+    this.props.setSelectedTask();
+  };
+
   render() {
     const strings = {
       title: "Life Improvement Task",
@@ -20,7 +54,13 @@ export default class TaskModal extends Component {
       newNoteBtnText: "Add a new note",
       deleteTaskBtnText: "Delete this task",
     };
-    const { selectedTask, handleClose } = this.props;
+    const {
+      props: { selectedTask, updateTask },
+      state: { isCompleted },
+      handleDeleteTask,
+      handleCompleteTask,
+      handleClose,
+    } = this;
     const shouldShowModal = Boolean(selectedTask);
 
     return (
@@ -42,27 +82,25 @@ export default class TaskModal extends Component {
               </Col>
               <Col>
                 <Form.Check
-                  type="switch"
                   id="isCompleted"
                   label={
-                    selectedTask?.isCompleted
-                      ? strings.taskComplete
-                      : strings.taskInProgress
+                    isCompleted ? strings.taskComplete : strings.taskInProgress
                   }
+                  defaultChecked={isCompleted}
+                  checked={isCompleted}
+                  onChange={handleCompleteTask}
+                  size="lg"
                 />
               </Col>
             </Row>
           </Col>
 
           <Col md={6}>
-            <NoteList notes={selectedTask?.notes} />
+            <NoteList notes={selectedTask?.notes} updateTask={updateTask} />
           </Col>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-end">
-          {/* <Button variant="primary" onClick={handleClose}>
-            {strings.newNoteBtnText}
-          </Button> */}
-          <Button variant="danger" onClick={handleClose} size="sm">
+          <Button variant="danger" onClick={handleDeleteTask} size="sm">
             {strings.deleteTaskBtnText}
           </Button>
         </Modal.Footer>

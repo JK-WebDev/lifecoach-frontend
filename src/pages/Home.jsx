@@ -94,6 +94,7 @@ export default withAuth0(
     };
 
     updateTask = async (updatedTask) => {
+      console.log("UPDATE CALLED!");
       const jwt = await this.getToken();
       api
         .taskPatch(updatedTask._id, updatedTask, jwt)
@@ -149,6 +150,8 @@ export default withAuth0(
         getGeneratedTask,
         updateGeneratedResponse,
         addNewTask,
+        updateTask,
+        deleteTask,
         setSelectedTask,
         setToastMsg,
       } = this;
@@ -177,7 +180,9 @@ export default withAuth0(
           <TaskList tasks={tasks} setSelectedTask={setSelectedTask} />
           <TaskModal
             selectedTask={this.state.selectedTask}
-            handleClose={setSelectedTask}
+            setSelectedTask={setSelectedTask}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
           />
           <ToastMessage toastMsg={toastMsg} setToastMsg={setToastMsg} />
         </>
