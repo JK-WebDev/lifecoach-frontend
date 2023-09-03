@@ -1,10 +1,10 @@
 //SITE EXPORTS
-export { default as Header } from "./Header";
-export { default as Footer } from "./Footer";
-export { default as ToastMessage } from "./ToastMessage";
+export { default as Header } from "./site/Header";
+export { default as Footer } from "./site/Footer";
+export { default as ToastMessage } from "./site/ToastMessage";
 
 // PAGE EXPORTS: HOME
-export { default as PromptInput } from "./PromptInput";
-export { default as ResponseCard } from "./ResponseCard";
-export { default as TaskList } from "./TaskList";
-export { default as TaskModal } from "./TaskModal";
+export { default as PromptInput } from "./home/PromptInput";
+export { default as ResponseCard } from "./home/ResponseCard";
+export { default as TaskList } from "./home/TaskList";
+export { default as TaskModal } from "./home/TaskModal";
