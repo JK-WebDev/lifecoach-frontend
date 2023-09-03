@@ -3,6 +3,8 @@ import { Component } from "react";
 import { withAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
+import api from "../api/axios";
+
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -13,17 +15,6 @@ import {
   TaskList,
   ToastMessage,
 } from "../components";
-
-const REQ_TIMEOUT = 10000;
-const MESSAGE = {
-  error: {
-    getGeneratedTask:
-      "There was an unexpected error with your request. Please try again.",
-    getTasks: "There was an issue retrieving your task list.",
-    addNewTask: "There was an issue adding the task to your list.",
-  },
-  success: { addNewTask: "Your task was added successfully!" },
-};
 
 export default withAuth0(
   class Home extends Component {
@@ -43,24 +34,14 @@ export default withAuth0(
         .catch((err) => console.error(err));
     };
 
-    getConfig = async () => {
-      const jwt = await this.getToken();
-      return {
-        headers: { Authorization: `Bearer ${jwt}` },
-        timeout: REQ_TIMEOUT,
-      };
-    };
-
     getGeneratedTask = async (query) => {
-      const route = "/query";
-      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
       const config = await this.getConfig();
-      axios
-        .post(url, { query }, config)
+      api
+        .queryPost(query, config)
         .then(({ data }) => this.updateGeneratedResponse(data))
         .catch(() =>
           this.setToastMsg({
-            text: MESSAGE.error.getGeneratedTask,
+            text: api.message.error.queryPost,
             type: "error",
           })
         );
@@ -71,16 +52,14 @@ export default withAuth0(
     };
 
     getTasks = async () => {
-      const route = "/task";
-      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const config = await this.getConfig();
-      axios
-        .get(url, config)
+      const jwt = await this.getToken();
+      api
+        .taskGet(jwt)
         .then(({ data: tasks }) =>
           this.setState({ tasks, generatedResponse: null })
         )
         .catch(() =>
-          this.setToastMsg({ text: MESSAGE.error.getTasks, type: "error" })
+          this.setToastMsg({ text: api.message.error.taskGet, type: "error" })
         );
     };
 
@@ -89,25 +68,63 @@ export default withAuth0(
     }
 
     addNewTask = async () => {
-      const route = "/task";
-      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const config = await this.getConfig();
+      const jwt = await this.getToken();
       const newTask = {
         title: this.state.generatedResponse.task,
         isCompleted: false,
         notes: [],
       };
-      axios
-        .post(url, newTask, config)
+      api
+        .taskPost(newTask, jwt)
         .then(() => this.getTasks())
         .then(() =>
           this.setToastMsg({
-            text: MESSAGE.success.addNewTask,
+            text: api.message.success.taskPost,
             type: "success",
           })
         )
         .catch(() =>
-          this.setToastMsg({ text: MESSAGE.error.addNewTask, type: "error" })
+          this.setToastMsg({
+            text: api.message.error.taskPost,
+            type: "error",
+          })
+        );
+    };
+
+    updateTask = async (updatedTask) => {
+      const jwt = await this.getToken();
+      api
+        .taskPatch(updatedTask._id, updatedTask, jwt)
+        .then(() => this.getTasks())
+        .then(() =>
+          this.setToastMsg({
+            text: api.message.success.taskPatch,
+            type: "success",
+          })
+        )
+        .catch(() =>
+          this.setToastMsg({ text: api.message.error.taskPatch, type: "error" })
+        );
+    };
+
+    deleteTask = async (deleteId) => {
+      const route = `/task/${deleteId}`;
+      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
+      const config = await this.getConfig();
+      axios
+        .delete(url, config)
+        .then(() => this.getTasks())
+        .then(() =>
+          this.setToastMsg({
+            text: api.message.success.taskDelete,
+            type: "success",
+          })
+        )
+        .catch(() =>
+          this.setToastMsg({
+            text: api.message.error.taskDelete,
+            type: "error",
+          })
         );
     };
 
@@ -157,4 +174,3 @@ export default withAuth0(
     }
   }
 );
-
