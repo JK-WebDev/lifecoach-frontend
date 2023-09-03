@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
+import NoteForm from "./NoteForm";
 import NoteList from "./NoteList";
 
 export default class TaskModal extends Component {
@@ -13,8 +14,13 @@ export default class TaskModal extends Component {
     super(props);
     this.state = {
       isCompleted: this.props.selectedTask?.isCompleted,
+      selectedNote: null,
     };
   }
+
+  setSelectedNote = (selectedNote = null) => {
+    this.setState({ selectedNote });
+  };
 
   handleDeleteTask = () => {
     const { _id } = this.props.selectedTask;
@@ -54,6 +60,7 @@ export default class TaskModal extends Component {
       const { isCompleted } = this.props.selectedTask || {};
       this.setState({
         isCompleted,
+        selectedNote: null,
       });
     }
   }
@@ -74,13 +81,19 @@ export default class TaskModal extends Component {
       deleteTaskBtnText: "Delete this task",
     };
     const {
-      props: { selectedTask, updateTask },
-      state: { isCompleted },
+      props: { selectedTask },
+      state: { isCompleted, selectedNote },
+      setSelectedNote,
       handleDeleteTask,
       handleCompleteTask,
+      handleAddNote,
+      handleEditNote,
+      handleDeleteNote,
       handleClose,
     } = this;
-    const shouldShowModal = Boolean(selectedTask);
+    const shouldShowModal = selectedTask !== null;
+    const shouldShowForm = selectedNote !== null;
+    const formMode = selectedNote?.length > 0 ? "edit" : "add";
 
     return (
       <Modal show={shouldShowModal} onHide={handleClose} size="xl" centered>
@@ -88,7 +101,7 @@ export default class TaskModal extends Component {
           <Modal.Title>{strings.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="row">
-          <Col md={6}>
+          <Col md={4} className="border-end">
             <Row className="mb-2">
               <Col className="fs-6 fw-semibold" sm={2}>
                 {strings.taskTitleLabel}
@@ -114,11 +127,25 @@ export default class TaskModal extends Component {
             </Row>
           </Col>
 
-          <Col md={6}>
-            <NoteList notes={selectedTask?.notes} updateTask={updateTask} />
+          <Col md={8} className="d-flex flex-column justify-content-between">
+            {shouldShowForm ? (
+              <NoteForm
+                selectedNote={selectedNote}
+                setSelectedNote={setSelectedNote}
+                formMode={formMode}
+                handleAddNote={handleAddNote}
+                handleEditNote={handleEditNote}
+              />
+            ) : (
+              <NoteList
+                notes={selectedTask?.notes}
+                setSelectedNote={setSelectedNote}
+                handleDeleteNote={handleDeleteNote}
+              />
+            )}
           </Col>
         </Modal.Body>
-        <Modal.Footer className="d-flex justify-content-end">
+        <Modal.Footer className="d-flex justify-content-start">
           <Button variant="danger" onClick={handleDeleteTask} size="sm">
             {strings.deleteTaskBtnText}
           </Button>
