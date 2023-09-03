@@ -58,6 +58,7 @@ export default withAuth0(
     };
 
     getTasks = async () => {
+      await this.setState({ isLoadingTasks: true });
       const jwt = await this.getToken();
       api
         .taskGet(jwt)
@@ -66,7 +67,8 @@ export default withAuth0(
         )
         .catch(() =>
           this.setToastMsg({ text: api.message.error.taskGet, type: "error" })
-        );
+        )
+        .finally(() => this.setState({ isLoadingTasks: false }));
     };
 
     componentDidMount() {
@@ -193,6 +195,7 @@ export default withAuth0(
             tasks={tasks}
             getTasks={getTasks}
             setSelectedTask={setSelectedTask}
+            isLoading={this.state.isLoadingTasks}
           />
           <TaskModal
             selectedTask={this.state.selectedTask}
