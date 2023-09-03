@@ -118,12 +118,11 @@ export default withAuth0(
     };
 
     deleteTask = async (deleteId) => {
-      const route = `/task/${deleteId}`;
-      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const config = await this.getConfig();
-      axios
-        .delete(url, config)
+      const jwt = await this.getToken();
+      api
+        .taskDelete(deleteId, jwt)
         .then(() => this.getTasks())
+        .then(() => this.setSelectedTask())
         .then(() =>
           this.setToastMsg({
             text: api.message.success.taskDelete,
