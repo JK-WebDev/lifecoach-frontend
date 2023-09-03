@@ -155,6 +155,7 @@ export default withAuth0(
         state: { generatedResponse, tasks, toastMsg },
         getGeneratedTask,
         updateGeneratedResponse,
+        getTasks,
         addNewTask,
         updateTask,
         deleteTask,
@@ -188,7 +189,11 @@ export default withAuth0(
               }
             </Col>
           </Container>
-          <TaskList tasks={tasks} setSelectedTask={setSelectedTask} />
+          <TaskList
+            tasks={tasks}
+            getTasks={getTasks}
+            setSelectedTask={setSelectedTask}
+          />
           <TaskModal
             selectedTask={this.state.selectedTask}
             setSelectedTask={setSelectedTask}

@@ -14,6 +14,7 @@ export default class TaskList extends Component {
   }
 
   toggleListVisibile = () => {
+    if (this.props.tasks.length === 0) this.props.getTasks();
     this.setState({ shouldShowList: !this.state.shouldShowList });
   };
 
@@ -27,6 +28,8 @@ export default class TaskList extends Component {
     const strings = {
       buttonLabel: "View my tasks",
       listHeader: "My Life Improvement Tasks",
+      noTasksMsg:
+        "Oh, so you think you're too good for my life-changing advice? Alright, fine! I guess you're just floating through life without a care in the world. Good for you! Let me know when you're ready to get started with some tasks.",
     };
 
     return (
@@ -49,14 +52,17 @@ export default class TaskList extends Component {
             <Offcanvas.Title>{strings.listHeader}</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            {tasks?.length > 0 &&
+            {tasks?.length > 0 ? (
               tasks.map((task) => (
                 <TaskListItem
                   key={task._id}
                   task={task}
                   setSelectedTask={setSelectedTask}
                 />
-              ))}
+              ))
+            ) : (
+              <p>strings.noTasksMsg</p>
+            )}
           </Offcanvas.Body>
         </Offcanvas>
       </>
