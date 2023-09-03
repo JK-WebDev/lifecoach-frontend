@@ -4,12 +4,14 @@ import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 import TaskListItem from "./TaskListItem";
+import TaskModal from "./TaskModal";
 
 export default class TaskList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       shouldShowList: false,
+      selectedTask: null,
     };
   }
 
@@ -17,11 +19,16 @@ export default class TaskList extends Component {
     this.setState({ shouldShowList: !this.state.shouldShowList });
   };
 
+  setSelectedTask = (selectedTask = null) => {
+    this.setState({ selectedTask });
+  };
+
   render() {
     const {
       props: { tasks },
-      state: { shouldShowList },
+      state: { shouldShowList, selectedTask },
       toggleListVisibile,
+      setSelectedTask,
     } = this;
 
     const strings = {
@@ -35,12 +42,14 @@ export default class TaskList extends Component {
           onClick={toggleListVisibile}
           className="fixed-bottom w-25 ms-auto"
           style={{ bottom: "75px", right: "20px" }}
+          size="lg"
         >
           {strings.buttonLabel}
         </Button>
         <Offcanvas
           show={shouldShowList}
           onHide={toggleListVisibile}
+          keyboard
           placement="end"
         >
           <Offcanvas.Header closeButton>
@@ -48,9 +57,16 @@ export default class TaskList extends Component {
           </Offcanvas.Header>
           <Offcanvas.Body>
             {tasks?.length > 0 &&
-              tasks.map((task) => <TaskListItem key={task._id} task={task} />)}
+              tasks.map((task) => (
+                <TaskListItem
+                  key={task._id}
+                  task={task}
+                  setSelectedTask={setSelectedTask}
+                />
+              ))}
           </Offcanvas.Body>
         </Offcanvas>
+        <TaskModal selectedTask={selectedTask} handleClose={setSelectedTask} />
       </>
     );
   }
