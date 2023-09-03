@@ -24,6 +24,10 @@ export default class PromptInput extends Component {
     e.target.reset();
   };
 
+  handleReset = () => {
+    this.setState({ promptText: "" });
+  };
+
   render() {
     const {
       props: { isLoading },
@@ -39,7 +43,7 @@ export default class PromptInput extends Component {
     const isDisabledBtn = isLoading || promptText.length < 3;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} onReset={this.handleReset}>
         <InputGroup size="lg">
           <InputGroup.Text className="fs-2">
             {strings.searchLabel}
