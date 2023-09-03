@@ -26,6 +26,8 @@ export default withAuth0(
         tasks: [],
         selectedTask: null,
         toastMsg: null,
+        isLoadingAi: false,
+        isLoadingTasks: false,
       };
     }
 
@@ -37,16 +39,18 @@ export default withAuth0(
     };
 
     getGeneratedTask = async (query) => {
-      const config = await this.getConfig();
-      api
-        .queryPost(query, config)
+      await this.setState({ isLoadingAi: true });
+      const jwt = await this.getToken();
+      await api
+        .queryPost(query, jwt)
         .then(({ data }) => this.updateGeneratedResponse(data))
         .catch(() =>
           this.setToastMsg({
             text: api.message.error.queryPost,
             type: "error",
           })
-        );
+        )
+        .finally(() => this.setState({ isLoadingAi: false }));
     };
 
     updateGeneratedResponse = (generatedResponse = null) => {
@@ -54,6 +58,7 @@ export default withAuth0(
     };
 
     getTasks = async () => {
+      await this.setState({ isLoadingTasks: true });
       const jwt = await this.getToken();
       api
         .taskGet(jwt)
@@ -62,7 +67,8 @@ export default withAuth0(
         )
         .catch(() =>
           this.setToastMsg({ text: api.message.error.taskGet, type: "error" })
-        );
+        )
+        .finally(() => this.setState({ isLoadingTasks: false }));
     };
 
     componentDidMount() {
@@ -114,12 +120,11 @@ export default withAuth0(
     };
 
     deleteTask = async (deleteId) => {
-      const route = `/task/${deleteId}`;
-      const url = `${import.meta.env.VITE_SERVER_URL}${route}`;
-      const config = await this.getConfig();
-      axios
-        .delete(url, config)
+      const jwt = await this.getToken();
+      api
+        .taskDelete(deleteId, jwt)
         .then(() => this.getTasks())
+        .then(() => this.setSelectedTask())
         .then(() =>
           this.setToastMsg({
             text: api.message.success.taskDelete,
@@ -152,6 +157,7 @@ export default withAuth0(
         state: { generatedResponse, tasks, toastMsg },
         getGeneratedTask,
         updateGeneratedResponse,
+        getTasks,
         addNewTask,
         updateTask,
         deleteTask,
@@ -167,20 +173,32 @@ export default withAuth0(
                 <h1 className="fs-5">{strings.instructionText}</h1>
               </Row>
               <Row className="my-3">
-                <PromptInput getGeneratedTask={getGeneratedTask} />
+                <PromptInput
+                  getGeneratedTask={getGeneratedTask}
+                  isLoading={this.state.isLoadingAi}
+                />
               </Row>
-              {generatedResponse && (
-                <Row>
-                  <ResponseCard
-                    generatedResponse={generatedResponse}
-                    updateGeneratedResponse={updateGeneratedResponse}
-                    addNewTask={addNewTask}
-                  />
+              {
+                <Row className="d-flex justify-content-center">
+                  <Col xs={12} sm={10} lg={8}>
+                    {generatedResponse && (
+                      <ResponseCard
+                        generatedResponse={generatedResponse}
+                        updateGeneratedResponse={updateGeneratedResponse}
+                        addNewTask={addNewTask}
+                      />
+                    )}
+                  </Col>
                 </Row>
-              )}
+              }
             </Col>
           </Container>
-          <TaskList tasks={tasks} setSelectedTask={setSelectedTask} />
+          <TaskList
+            tasks={tasks}
+            getTasks={getTasks}
+            setSelectedTask={setSelectedTask}
+            isLoading={this.state.isLoadingTasks}
+          />
           <TaskModal
             selectedTask={this.state.selectedTask}
             setSelectedTask={setSelectedTask}

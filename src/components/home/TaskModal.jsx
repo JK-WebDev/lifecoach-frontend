@@ -25,7 +25,6 @@ export default class TaskModal extends Component {
   handleDeleteTask = () => {
     const { _id } = this.props.selectedTask;
     this.props.deleteTask(_id);
-    this.props.handleClose();
   };
 
   handleCompleteTask = ({ target }) => {
