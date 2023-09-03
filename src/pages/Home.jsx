@@ -94,11 +94,11 @@ export default withAuth0(
     };
 
     updateTask = async (updatedTask) => {
-      console.log("UPDATE CALLED!");
       const jwt = await this.getToken();
       api
         .taskPatch(updatedTask._id, updatedTask, jwt)
-        .then(() => this.getTasks())
+        .then(({ data }) => this.setSelectedTask(data))
+        .then(async () => await this.getTasks())
         .then(() =>
           this.setToastMsg({
             text: api.message.success.taskPatch,
@@ -106,7 +106,10 @@ export default withAuth0(
           })
         )
         .catch(() =>
-          this.setToastMsg({ text: api.message.error.taskPatch, type: "error" })
+          this.setToastMsg({
+            text: api.message.error.taskPatch,
+            type: "error",
+          })
         );
     };
 
