@@ -26,6 +26,8 @@ export default withAuth0(
         tasks: [],
         selectedTask: null,
         toastMsg: null,
+        isLoadingAi: false,
+        isLoadingTasks: false,
       };
     }
 
@@ -37,8 +39,9 @@ export default withAuth0(
     };
 
     getGeneratedTask = async (query) => {
+      await this.setState({ isLoadingAi: true });
       const jwt = await this.getToken();
-      api
+      await api
         .queryPost(query, jwt)
         .then(({ data }) => this.updateGeneratedResponse(data))
         .catch(() =>
@@ -46,7 +49,8 @@ export default withAuth0(
             text: api.message.error.queryPost,
             type: "error",
           })
-        );
+        )
+        .finally(() => this.setState({ isLoadingAi: false }));
     };
 
     updateGeneratedResponse = (generatedResponse = null) => {
@@ -167,17 +171,22 @@ export default withAuth0(
                 <h1 className="fs-5">{strings.instructionText}</h1>
               </Row>
               <Row className="my-3">
-                <PromptInput getGeneratedTask={getGeneratedTask} />
+                <PromptInput
+                  getGeneratedTask={getGeneratedTask}
+                  isLoading={this.state.isLoadingAi}
+                />
               </Row>
-              {generatedResponse && (
+              {
                 <Row>
-                  <ResponseCard
-                    generatedResponse={generatedResponse}
-                    updateGeneratedResponse={updateGeneratedResponse}
-                    addNewTask={addNewTask}
-                  />
+                  {generatedResponse && (
+                    <ResponseCard
+                      generatedResponse={generatedResponse}
+                      updateGeneratedResponse={updateGeneratedResponse}
+                      addNewTask={addNewTask}
+                    />
+                  )}
                 </Row>
-              )}
+              }
             </Col>
           </Container>
           <TaskList tasks={tasks} setSelectedTask={setSelectedTask} />
