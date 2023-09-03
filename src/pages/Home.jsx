@@ -37,9 +37,9 @@ export default withAuth0(
     };
 
     getGeneratedTask = async (query) => {
-      const config = await this.getConfig();
+      const jwt = await this.getToken();
       api
-        .queryPost(query, config)
+        .queryPost(query, jwt)
         .then(({ data }) => this.updateGeneratedResponse(data))
         .catch(() =>
           this.setToastMsg({
