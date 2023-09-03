@@ -13,7 +13,13 @@ export default class TaskListItem extends Component {
         onClick={() => setSelectedTask(task)}
       >
         <Card.Body>
-          <Card.Text>{task.title}</Card.Text>
+          <Card.Text
+            className={`${
+              task.isCompleted ? "text-decoration-line-through" : ""
+            }`}
+          >
+            {task.title}
+          </Card.Text>
         </Card.Body>
       </Card>
     );

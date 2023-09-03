@@ -1,6 +1,6 @@
 # Lifecoach - Frontend
 
-Version 1.0.4
+Version 1.0.6
 
 ## Team Members
 
@@ -25,6 +25,7 @@ npm run dev
 
 ## Change Log
 
+- 1.0.6 - Adds add/edit/delete functionality to task notes
 - 1.0.5 - Adds TaskModal to view individual task items
 - 1.0.4 - Adds ability to add tasks to task list + toast notifications
 - 1.0.3 - Adds user task list

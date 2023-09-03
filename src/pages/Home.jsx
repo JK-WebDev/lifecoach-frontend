@@ -14,6 +14,7 @@ import {
   ResponseCard,
   TaskList,
   ToastMessage,
+  TaskModal,
 } from "../components";
 
 export default withAuth0(
@@ -23,6 +24,7 @@ export default withAuth0(
       this.state = {
         generatedResponse: null,
         tasks: [],
+        selectedTask: null,
         toastMsg: null,
       };
     }
@@ -95,7 +97,8 @@ export default withAuth0(
       const jwt = await this.getToken();
       api
         .taskPatch(updatedTask._id, updatedTask, jwt)
-        .then(() => this.getTasks())
+        .then(({ data }) => this.setSelectedTask(data))
+        .then(async () => await this.getTasks())
         .then(() =>
           this.setToastMsg({
             text: api.message.success.taskPatch,
@@ -103,7 +106,10 @@ export default withAuth0(
           })
         )
         .catch(() =>
-          this.setToastMsg({ text: api.message.error.taskPatch, type: "error" })
+          this.setToastMsg({
+            text: api.message.error.taskPatch,
+            type: "error",
+          })
         );
     };
 
@@ -128,6 +134,10 @@ export default withAuth0(
         );
     };
 
+    setSelectedTask = (selectedTask = null) => {
+      this.setState({ selectedTask });
+    };
+
     setToastMsg = (toastMsg = null) => {
       this.setState({ toastMsg });
     };
@@ -143,6 +153,9 @@ export default withAuth0(
         getGeneratedTask,
         updateGeneratedResponse,
         addNewTask,
+        updateTask,
+        deleteTask,
+        setSelectedTask,
         setToastMsg,
       } = this;
 
@@ -167,7 +180,13 @@ export default withAuth0(
               )}
             </Col>
           </Container>
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} setSelectedTask={setSelectedTask} />
+          <TaskModal
+            selectedTask={this.state.selectedTask}
+            setSelectedTask={setSelectedTask}
+            updateTask={updateTask}
+            deleteTask={deleteTask}
+          />
           <ToastMessage toastMsg={toastMsg} setToastMsg={setToastMsg} />
         </>
       );
