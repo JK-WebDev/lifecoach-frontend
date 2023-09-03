@@ -24,10 +24,29 @@ export default class TaskModal extends Component {
 
   handleCompleteTask = ({ target }) => {
     const { checked: isCompleted } = target;
-    console.log({ isCompleted });
-    const _id = this.props.selectedTask._id;
+    const { _id } = this.props.selectedTask;
     this.props.updateTask({ _id, isCompleted });
     this.setState({ isCompleted });
+  };
+
+  handleAddNote = (newNote) => {
+    const { _id, notes: prevNotes } = this.props.selectedTask;
+    const notes = [...prevNotes, newNote];
+    this.props.updateTask({ _id, notes });
+  };
+
+  handleEditNote = (prevNote, updateNote) => {
+    const { _id, notes: prevNotes } = this.props.selectedTask;
+    const notes = prevNotes.map((note) =>
+      note === prevNote ? updateNote : note
+    );
+    this.props.updateTask({ _id, notes });
+  };
+
+  handleDeleteNote = (deleteNote) => {
+    const { _id, notes: prevNotes } = this.props.selectedTask;
+    const notes = prevNotes.filter((note) => note !== deleteNote);
+    this.props.updateTask({ _id, notes });
   };
 
   componentDidUpdate(prevProps) {
@@ -49,8 +68,8 @@ export default class TaskModal extends Component {
       taskTitleLabel: "Task:",
       statusLabel: "Status:",
       finishedLabel: "All done?",
-      taskComplete: "You did it! \u{1F389} Congrats! \u{1F973}",
-      taskInProgress: "Work in progress \u{1F4AA}",
+      taskComplete: "DONE! You did it! \u{1F389} Congrats! \u{1F973}",
+      taskInProgress: "In progress... \u{1F4AA}",
       newNoteBtnText: "Add a new note",
       deleteTaskBtnText: "Delete this task",
     };
