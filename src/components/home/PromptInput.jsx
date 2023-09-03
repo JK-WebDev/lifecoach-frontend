@@ -16,14 +16,16 @@ export default class PromptInput extends Component {
   render() {
     const { isLoading } = this.props;
     const strings = {
-      searchLabel: "\u{1F50D}",
+      searchLabel: "\u{1F916}",
       searchButton: "Give me advice!",
     };
 
     return (
       <Form onSubmit={this.handleSubmit}>
         <InputGroup size="lg">
-          <InputGroup.Text>{strings.searchLabel}</InputGroup.Text>
+          <InputGroup.Text className="fs-2">
+            {strings.searchLabel}
+          </InputGroup.Text>
           <Form.Control type="search" name="query" />
           <Button type="submit" disabled={isLoading}>
             {strings.searchButton}
