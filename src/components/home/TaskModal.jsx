@@ -1,11 +1,10 @@
 import { Component } from "react";
 
 import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
+import TaskModalDetails from "./TaskModalDetails";
 import NoteForm from "./NoteForm";
 import NoteList from "./NoteList";
 
@@ -71,11 +70,6 @@ export default class TaskModal extends Component {
   render() {
     const strings = {
       title: "Life Improvement Task",
-      taskTitleLabel: "Task:",
-      statusLabel: "Status:",
-      finishedLabel: "All done?",
-      taskComplete: "DONE! You did it! \u{1F389} Congrats! \u{1F973}",
-      taskInProgress: "In progress... \u{1F4AA}",
       newNoteBtnText: "Add a new note",
       deleteTaskBtnText: "Delete this task",
     };
@@ -100,32 +94,11 @@ export default class TaskModal extends Component {
           <Modal.Title>{strings.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="row">
-          <Col md={4} className="border-end">
-            <Row className="mb-2">
-              <Col className="fs-6 fw-semibold" sm={2}>
-                {strings.taskTitleLabel}
-              </Col>
-              <Col>{selectedTask?.title}</Col>
-            </Row>
-            <Row>
-              <Col className="fs-6 fw-semibold" sm={2}>
-                {strings.statusLabel}
-              </Col>
-              <Col>
-                <Form.Check
-                  id="isCompleted"
-                  label={
-                    isCompleted ? strings.taskComplete : strings.taskInProgress
-                  }
-                  defaultChecked={isCompleted}
-                  checked={isCompleted}
-                  onChange={handleCompleteTask}
-                  size="lg"
-                />
-              </Col>
-            </Row>
-          </Col>
-
+          <TaskModalDetails
+            selectedTask={selectedTask}
+            isCompleted={isCompleted}
+            handleCompleteTask={handleCompleteTask}
+          />
           <Col md={8} className="d-flex flex-column justify-content-between">
             {shouldShowForm ? (
               <NoteForm
