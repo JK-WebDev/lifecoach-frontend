@@ -2,6 +2,7 @@ import { Component } from "react";
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 
 export default class NoteForm extends Component {
   constructor(props) {
@@ -36,6 +37,7 @@ export default class NoteForm extends Component {
   render() {
     const {
       props: { formMode },
+      state: { updateNote },
       handleTextInput,
       handleSubmit,
     } = this;
@@ -43,9 +45,11 @@ export default class NoteForm extends Component {
     const strings = {
       addNoteLabel: "New note:",
       editNoteLabel: "Update note:",
-      saveBtnText: "Save",
+      saveBtnText: "Save Note",
       cancelBtnText: "Discard Changes",
     };
+
+    const saveBtnDisabled = updateNote.length < 1;
 
     return (
       <Form onSubmit={handleSubmit}>
@@ -60,12 +64,20 @@ export default class NoteForm extends Component {
             className="mb-2"
           />
         </Form.Group>
-        <Button variant="primary" size="sm" type="submit" className="me-2">
-          {strings.saveBtnText}
-        </Button>
-        <Button variant="secondary" size="sm" onClick={this.handleFormClose}>
-          {strings.cancelBtnText}
-        </Button>
+        <Col className="d-flex justify-content-end">
+          <Button
+            variant="primary"
+            size="sm"
+            type="submit"
+            className="me-2"
+            disabled={saveBtnDisabled}
+          >
+            {strings.saveBtnText}
+          </Button>
+          <Button variant="secondary" size="sm" onClick={this.handleFormClose}>
+            {strings.cancelBtnText}
+          </Button>
+        </Col>
       </Form>
     );
   }
