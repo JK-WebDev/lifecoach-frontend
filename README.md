@@ -1,6 +1,6 @@
 # Lifecoach - Frontend
 
-Version 1.0.9
+Version 1.0.10
 
 ## Team Members
 
@@ -25,6 +25,7 @@ npm run dev
 
 ## Change Log
 
+- 1.0.10 - Adds CallToAction component
 - 1.0.9 - Cleans up UI
 - 1.0.8 - Adds profiles to about page
 - 1.0.7 - Adds loading indicators and squashes bugs

@@ -2,6 +2,7 @@
 export { default as Header } from "./site/Header";
 export { default as Footer } from "./site/Footer";
 export { default as ToastMessage } from "./site/ToastMessage";
+export { default as CallToAction } from "./site/CallToAction";
 
 // PAGE EXPORTS: HOME
 export { default as PromptInput } from "./home/PromptInput";
