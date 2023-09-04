@@ -1,5 +1,7 @@
 import { Component } from "react";
 
+import "./TaskListItem.css";
+
 import Card from "react-bootstrap/Card";
 
 export default class TaskListItem extends Component {
@@ -8,7 +10,7 @@ export default class TaskListItem extends Component {
 
     return (
       <Card
-        className="mb-2"
+        className={`mb-2 ${task.isCompleted ? "completed" : ""}`}
         style={{ cursor: "pointer" }}
         onClick={() => setSelectedTask(task)}
       >

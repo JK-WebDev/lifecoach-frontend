@@ -1,0 +1,13 @@
+:not(.completed)+.completed {
+  margin-top: 2.5rem;
+}
+
+:not(.completed)+.completed::before {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  content: 'Completed Tasks:';
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

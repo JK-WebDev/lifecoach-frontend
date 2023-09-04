@@ -8,3 +8,7 @@ export { default as PromptInput } from "./home/PromptInput";
 export { default as ResponseCard } from "./home/ResponseCard";
 export { default as TaskList } from "./home/TaskList";
 export { default as TaskModal } from "./home/TaskModal";
+
+// PAGE EXPORTS: ABOUT
+export { default as TeamBio } from "./about/TeamBio";
+export { default as TeamSidebar } from "./about/TeamSidebar";
