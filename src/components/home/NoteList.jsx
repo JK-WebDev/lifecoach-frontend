@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 import NoteListItem from "./NoteListItem";
 
@@ -14,8 +14,7 @@ export default class NoteList extends Component {
     const strings = {
       notesTitle: "My Notes:",
       addNoteBtnText: "Add a note",
-      noNotes: `This task doesn't have any notes yet. \u{1F614}
-      You should probably add some and get this task movin' along.`,
+      noNotes: `This task doesn't have any notes yet. \u{1F614}\n\nYou should probably add some and get this task movin' along.`,
     };
 
     return (
@@ -31,7 +30,14 @@ export default class NoteList extends Component {
             />
           ))
         ) : (
-          <Col>{strings.noNotes}</Col>
+          <Card
+            body
+            border="info"
+            style={{ whiteSpace: "pre-wrap" }}
+            className="mb-5"
+          >
+            {strings.noNotes}
+          </Card>
         )}
         <Button
           size="sm"
