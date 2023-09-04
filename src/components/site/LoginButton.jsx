@@ -25,7 +25,7 @@ export default withAuth0(
         signOut: "Sign out",
       };
       const { isAuthenticated, user } = this.props.auth0;
-      const variant = isAuthenticated ? "danger" : "primary";
+      const variant = `${isAuthenticated ? "danger" : "primary"}`;
 
       return (
         <>

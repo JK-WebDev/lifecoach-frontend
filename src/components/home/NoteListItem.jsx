@@ -2,6 +2,7 @@ import { Component } from "react";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 export default class NoteList extends Component {
   render() {
@@ -19,24 +20,26 @@ export default class NoteList extends Component {
           <Card.Text>{note}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-end gap-2">
-          <Button
-            variant="success"
-            size="sm"
-            onClick={() => setSelectedNote(note)}
-          >
-            {strings.editBtnIcon}
-            &nbsp; &nbsp;
-            {strings.editBtnText}
-          </Button>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={() => handleDeleteNote(note)}
-          >
-            {strings.deleteBtnIcon}
-            &nbsp; &nbsp;
-            {strings.deleteBtnText}
-          </Button>
+          <ButtonGroup>
+            <Button
+              variant="outline-success"
+              size="sm"
+              onClick={() => setSelectedNote(note)}
+            >
+              {strings.editBtnIcon}
+              &nbsp; &nbsp;
+              {strings.editBtnText}
+            </Button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              onClick={() => handleDeleteNote(note)}
+            >
+              {strings.deleteBtnIcon}
+              &nbsp; &nbsp;
+              {strings.deleteBtnText}
+            </Button>
+          </ButtonGroup>
         </Card.Footer>
       </Card>
     );

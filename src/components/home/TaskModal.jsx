@@ -145,7 +145,7 @@ export default class TaskModal extends Component {
           </Col>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-start">
-          <Button variant="danger" onClick={handleDeleteTask} size="sm">
+          <Button variant="outline-danger" onClick={handleDeleteTask} size="sm">
             {strings.deleteTaskBtnText}
           </Button>
         </Modal.Footer>

@@ -40,6 +40,7 @@ export default class TaskList extends Component {
           className="fixed-bottom w-25 ms-auto"
           style={{ bottom: "75px", right: "20px" }}
           size="lg"
+          variant="outline-primary"
         >
           {strings.buttonLabel}
           {isLoading && (

@@ -43,6 +43,7 @@ export default class NoteList extends Component {
           size="sm"
           className="mt-2 mb-2 ms-auto"
           onClick={() => setSelectedNote("")}
+          variant="primary"
         >
           {strings.addNoteBtnText}
         </Button>
