@@ -168,7 +168,9 @@ export default withAuth0(
 
       return (
         <>
-          <CallToAction>{strings.instructionText}</CallToAction>
+          <Container fluid>
+            <CallToAction>{strings.instructionText}</CallToAction>
+          </Container>
           <Container className="text-center container-md">
             <Col>
               <Row className="my-3">
