@@ -53,7 +53,6 @@ export default class PromptInput extends Component {
             name="query"
             value={this.state.promptText}
             onChange={this.handleTextInput}
-            autofocus
           />
           <Button type="submit" disabled={isDisabledBtn}>
             {isLoading
@@ -67,7 +66,7 @@ export default class PromptInput extends Component {
                 variant="light"
                 size="sm"
                 role="status"
-                className="ms-2 my-auto"
+                className="ms-3 my-auto"
               />
             )}
           </Button>
