@@ -45,7 +45,7 @@ export default class PromptInput extends Component {
     return (
       <Form onSubmit={this.handleSubmit} onReset={this.handleReset}>
         <InputGroup size="lg">
-          <InputGroup.Text className="fs-2">
+          <InputGroup.Text className="fs-4 p-2">
             {strings.searchLabel}
           </InputGroup.Text>
           <Form.Control
@@ -53,6 +53,7 @@ export default class PromptInput extends Component {
             name="query"
             value={this.state.promptText}
             onChange={this.handleTextInput}
+            autofocus
           />
           <Button type="submit" disabled={isDisabledBtn}>
             {isLoading
