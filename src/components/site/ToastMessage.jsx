@@ -16,7 +16,7 @@ export default class ToastMessage extends Component {
 
     return (
       <ToastContainer
-        className="p-3 mb-5"
+        className="p-3 mb-4"
         position="bottom-center"
         style={{ zIndex }}
       >
