@@ -37,8 +37,13 @@ export default class TaskList extends Component {
       <>
         <Button
           onClick={toggleListVisibile}
-          className="fixed-bottom w-25 ms-auto"
-          style={{ bottom: "75px", right: "20px" }}
+          className="fixed-bottom ms-auto"
+          style={{
+            bottom: "75px",
+            right: "20px",
+            maxWidth: "250px",
+            backgroundColor: "white",
+          }}
           size="lg"
           variant="outline-primary"
         >
