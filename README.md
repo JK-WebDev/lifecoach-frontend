@@ -1,6 +1,6 @@
 # Lifecoach - Frontend
 
-Version 1.0.4
+Version 1.0.10
 
 ## Team Members
 
@@ -25,6 +25,12 @@ npm run dev
 
 ## Change Log
 
+- 1.0.10 - Adds CallToAction component
+- 1.0.9 - Cleans up UI
+- 1.0.8 - Adds profiles to about page
+- 1.0.7 - Adds loading indicators and squashes bugs
+- 1.0.6 - Adds add/edit/delete functionality to task notes
+- 1.0.5 - Adds TaskModal to view individual task items
 - 1.0.4 - Adds ability to add tasks to task list + toast notifications
 - 1.0.3 - Adds user task list
 - 1.0.2 - Adds user prompt input to request a generated task

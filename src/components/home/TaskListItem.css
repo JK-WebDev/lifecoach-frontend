@@ -1,0 +1,26 @@
+.offcanvas-body .card:first-of-type {
+  margin-top: 15px;
+}
+
+.offcanvas-body .card:first-of-type::before {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  content: 'In-progress Tasks:';
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+:not(.completed)+.completed {
+  margin-top: 40px;
+}
+
+:not(.completed)+.completed::before {
+  position: absolute;
+  top: -28px;
+  left: 0;
+  content: 'Completed Tasks:';
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
