@@ -2,7 +2,6 @@ import { Component } from "react";
 
 import Time from "../../utilities/time";
 
-import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -18,7 +17,7 @@ export default class TaskModal extends Component {
       taskInProgress: "Workin' on it... \u{1F605}",
     };
     const {
-      props: { selectedTask, isCompleted, handleCompleteTask },
+      props: { selectedTask, isCompleted },
     } = this;
     const labelColSize = { sm: 12, md: 12, lg: 4 };
 
@@ -45,17 +44,7 @@ export default class TaskModal extends Component {
             {strings.statusLabel}
           </Col>
           <Col>
-            <Form.Check
-              id="isCompleted"
-              label={
-                isCompleted ? strings.taskComplete : strings.taskInProgress
-              }
-              defaultChecked={isCompleted}
-              checked={isCompleted}
-              onChange={handleCompleteTask}
-              size="lg"
-              style={{ whiteSpace: "pre-wrap" }}
-            />
+            {isCompleted ? strings.taskComplete : strings.taskInProgress}
           </Col>
         </Row>
         <Row className="flex-grow-1"></Row>

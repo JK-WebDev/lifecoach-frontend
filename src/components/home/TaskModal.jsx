@@ -1,6 +1,7 @@
 import { Component } from "react";
 
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
@@ -26,11 +27,13 @@ export default class TaskModal extends Component {
     this.props.deleteTask(_id);
   };
 
-  handleCompleteTask = ({ target }) => {
-    const { checked: isCompleted } = target;
+  handleCompleteTask = () => {
     const { _id } = this.props.selectedTask;
-    this.props.updateTask({ _id, isCompleted });
-    this.setState({ isCompleted });
+    this.setState((prevState) => {
+      const isCompleted = !prevState.isCompleted;
+      this.props.updateTask({ _id, isCompleted });
+      return { isCompleted };
+    });
   };
 
   handleAddNote = (newNote) => {
@@ -71,7 +74,9 @@ export default class TaskModal extends Component {
     const strings = {
       title: "Life Improvement Task",
       newNoteBtnText: "Add a new note",
-      deleteTaskBtnText: "Delete this task",
+      completeTaskBtn: "Mark complete",
+      unCompleteTaskBtn: "Unmark complete",
+      deleteTaskBtnText: "Delete task",
     };
     const {
       props: { selectedTask },
@@ -97,7 +102,6 @@ export default class TaskModal extends Component {
           <TaskModalDetails
             selectedTask={selectedTask}
             isCompleted={isCompleted}
-            handleCompleteTask={handleCompleteTask}
           />
           <Col md={8} className="d-flex flex-column justify-content-between">
             {shouldShowForm ? (
@@ -120,6 +124,22 @@ export default class TaskModal extends Component {
         <Modal.Footer className="d-flex justify-content-start">
           <Button variant="outline-danger" onClick={handleDeleteTask} size="sm">
             {strings.deleteTaskBtnText}
+          </Button>
+          <Button
+            variant={isCompleted ? "outline-success" : "success"}
+            onClick={handleCompleteTask}
+            size="sm"
+            className="d-flex flex-row gap-2"
+          >
+            <Form.Check
+              id="isCompleted"
+              defaultChecked={isCompleted}
+              checked={isCompleted}
+              size="lg"
+              style={{ whiteSpace: "pre-wrap" }}
+              disabled
+            />
+            {isCompleted ? strings.unCompleteTaskBtn : strings.completeTaskBtn}
           </Button>
         </Modal.Footer>
       </Modal>
