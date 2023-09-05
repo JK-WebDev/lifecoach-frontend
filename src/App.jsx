@@ -3,6 +3,7 @@ import { Component } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { withAuth0 } from "@auth0/auth0-react";
 
+import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 
 import { Welcome, Home, About } from "./pages/";
@@ -17,9 +18,14 @@ export default withAuth0(
         <Router>
           <Header />
           <main>
-
             {isLoading ? (
-              <Spinner animation="border" variant="primary" />
+              <Container fluid className="w-100">
+                <Spinner
+                  animation="border"
+                  variant="primary"
+                  className="mx-auto mt-5"
+                />
+              </Container>
             ) : (
               <Routes>
                 {isAuthenticated ? (

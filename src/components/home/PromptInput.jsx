@@ -44,7 +44,7 @@ export default class PromptInput extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit} onReset={this.handleReset}>
-        <InputGroup size="lg">
+        <InputGroup size="lg" className="justify-content-end">
           <InputGroup.Text className="fs-4 p-2">
             {strings.searchLabel}
           </InputGroup.Text>
@@ -53,6 +53,7 @@ export default class PromptInput extends Component {
             name="query"
             value={this.state.promptText}
             onChange={this.handleTextInput}
+            style={{ minWidth: "250px" }}
           />
           <Button type="submit" disabled={isDisabledBtn}>
             {isLoading

@@ -19,26 +19,33 @@ export default class Header extends Component {
 
     return (
       <header className="bg-secondary bg-gradient sticky-top">
-        <Navbar>
+        <Navbar expand="lg" collapseOnSelect>
           <Container fluid>
-            <Nav variant="underline">
-              <Navbar.Brand className={`${textColor}`}>
-                {strings.brand}
-              </Navbar.Brand>
-              <Nav.Item>
-                <Nav.Link as={Link} to="/" className={`${textColor}`}>
-                  {strings.home}
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link as={Link} to="/about" className={`${textColor}`}>
-                  {strings.about}
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-            <Nav>
-              <LoginButton />
-            </Nav>
+            <Navbar.Brand className={`${textColor}`}>
+              {strings.brand}
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav variant="underline" className="flex-grow-1">
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/" className={`${textColor}`}>
+                    {strings.home}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/about" className={`${textColor}`}>
+                    {strings.about}
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+              <Nav>
+                <Nav.Item className="d-flex flex-row justify-content-end gap-2">
+                  <Nav.Link>
+                    <LoginButton />
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
       </header>

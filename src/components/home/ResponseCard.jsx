@@ -24,16 +24,16 @@ export default class ResponseCard extends Component {
     };
 
     return (
-      <Card>
+      <Card className="mb-5">
         <Card.Header className="d-flex justify-content-end">
           <CloseButton onClick={handleClose} />
         </Card.Header>
         <Card.Body>
-          <Card.Title className="text-justify-justify px-2">
+          <Card.Title className="text-justify-justify px-2 fs-6">
             <h2 className="fs-5">{strings.messageHeader}</h2>
             {message}
           </Card.Title>
-          <Card.Text className="text-justify-justify p-2">
+          <Card.Text className="text-justify-justify p-2 fs-6">
             <hr />
             <h2 className="fs-5">{strings.taskHeader}</h2>
             {task}
