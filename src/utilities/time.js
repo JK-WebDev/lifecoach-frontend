@@ -1,4 +1,6 @@
-class Time {
+"use strict";
+
+export default class Time {
   // Expects to receive a timestamp in the format of '2000-01-01T12:12:12.999Z'
   static getTimeAgo(timestamp, strings = { prefix: "", suffix: "ago" }) {
     const targetDate = new Date(timestamp);
@@ -71,5 +73,3 @@ class Time {
     return date instanceof Date && !isNaN(date);
   }
 }
-
-export default Time;
