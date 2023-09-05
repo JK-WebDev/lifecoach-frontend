@@ -180,8 +180,8 @@ export default withAuth0(
                 />
               </Row>
               {
-                <Row className="d-flex justify-content-center">
-                  <Col xs={12} sm={10} lg={8}>
+                <Row className="d-flex justify-content-center pb-5 mb-5">
+                  <Col xs={12} sm={10} lg={8} className="pb-5 mb-5">
                     {generatedResponse && (
                       <ResponseCard
                         generatedResponse={generatedResponse}
