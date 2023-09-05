@@ -12,12 +12,13 @@ export default class ToastMessage extends Component {
     } = this;
     const shouldShowToast = Boolean(toastMsg);
     const background = toastMsg?.type === "error" ? "danger" : "success";
+    const zIndex = 10000;
 
     return (
       <ToastContainer
         className="p-3 mb-5"
         position="bottom-center"
-        style={{ zIndex: 1 }}
+        style={{ zIndex }}
       >
         <Toast
           bg={background}
