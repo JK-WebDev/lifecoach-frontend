@@ -11,6 +11,7 @@ import Row from "react-bootstrap/Row";
 import {
   PromptInput,
   ResponseCard,
+  HistoryList,
   TaskList,
   ToastMessage,
   TaskModal,
@@ -44,7 +45,7 @@ export default withAuth0(
       const jwt = await this.getToken();
       await api
         .queryPost(query, jwt)
-        .then(({ data }) => this.updateGeneratedResponse(data))
+        .then(({ data }) => this.updateGeneratedResponse({ ...data, query }))
         .catch(() =>
           this.setToastMsg({
             text: api.message.error.queryPost,
@@ -189,6 +190,11 @@ export default withAuth0(
                         addNewTask={addNewTask}
                       />
                     )}
+                    <HistoryList
+                      generatedResponse={generatedResponse}
+                      addNewTask={addNewTask}
+                      className={generatedResponse === null ? "d-none" : ""}
+                    />
                   </Col>
                 </Row>
               }

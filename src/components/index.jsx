@@ -7,6 +7,7 @@ export { default as CallToAction } from "./site/CallToAction";
 // PAGE EXPORTS: HOME
 export { default as PromptInput } from "./home/PromptInput";
 export { default as ResponseCard } from "./home/ResponseCard";
+export { default as HistoryList } from "./home/HistoryList";
 export { default as TaskList } from "./home/TaskList";
 export { default as TaskModal } from "./home/TaskModal";
 

@@ -33,7 +33,7 @@ export default class ResponseCard extends Component {
             <h2 className="fs-5">{strings.messageHeader}</h2>
             {message}
           </Card.Title>
-          <Card.Text className="text-justify-justify p-2 fs-6">
+          <Card.Text as="div" className="text-justify-justify p-2 fs-6">
             <hr />
             <h2 className="fs-5">{strings.taskHeader}</h2>
             {task}
